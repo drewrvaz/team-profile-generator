@@ -13,25 +13,25 @@ describe('employee', () => {
       expect(employee.email).toEqual('drewrvaz@gmail.com');
     });
 
-    // Pulls the name from getName
+    // Pulls the name from getName()
     it('should pull the name input', () => {
       const employee = new Employee('Andrew', 03, 'drewrvaz@gmail.com')
       expect(employee.getName()).toEqual(expect.any(String));
     });
 
-    // Pulls the ID from getId
+    // Pulls the ID from getId()
     it('should pull the id input', () => {
       const employee = new Employee('Andrew', 03, 'drewrvaz@gmail.com')
       expect(employee.getId()).toEqual(expect.any(Number));
     });
 
-    // Pulls the email from getEmail
+    // Pulls the email from getEmail()
     it('should pull the email input', () => {
       const employee = new Employee('Andrew', 03, 'drewrvaz@gmail.com')
       expect(employee.getEmail()).toEqual(expect.any(String));
     });
 
-    // Pulls the role from getRole
+    // Pulls the role from getRole()
     it('should pull the employee role', () => {
       const employee = new Employee('Andrew', 03, 'drewrvaz@gmail.com')
       expect(employee.getRole()).toEqual('Employee');
