@@ -1,4 +1,4 @@
-// Using the engineering constructor to build the test for engineer
+// Using the Engineer constructor to build the test for engineer
 const Engineer = require('../lib/engineer');
 
 // Creating an engineer object for the test
@@ -14,7 +14,7 @@ describe('engineer', () => {
   it('should pull the Github input', () => {
     const engineer = new Engineer('Andrew', 03, 'drewrvaz@gmail.com', 'drewrvaz');
 
-    expect(engineer.getGithub()).toEqual(expect.stringContainging(engineer.github.toString()));
+    expect(engineer.getGithub()).toEqual(expect.stringContaining(engineer.github.toString()));
   });
 
   // Pulls role from getRole()
