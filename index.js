@@ -14,12 +14,12 @@ const teamArray = [];
 // Begin employee prompts
 function addEmployee() {
   inquirer.prompt([
-    {
+    { // add employee name
       type: "input",
       name: "name",
       message: "Enter the employee's name."
     },
-    {
+    { // select employee type
       type: "list",
       message: "Select the employee's role.",
       choices: [
@@ -29,44 +29,39 @@ function addEmployee() {
       ],
       name: "role"
     },
-    {
+    { // add employee id number
       type: "input",
       name: "id",
       message: "Enter the employee's ID number."
     },
-    {
+    { // add employee email
       type: "input",
       name: "email",
       message: "Enter the employee's email address."
-    },
-    {
-      type: "input",
-      name: "name",
-      message: "Enter the employee's name."
     }
-  ])
+  ]) // Then function to determine what other information needs to be added for the employee basaed on their role
   .then(function({name, role, id, email}) {
     let roleInfo = "";
     if (role === "Engineer") {
-      roleInfo = "Github username";
+      roleInfo = "github username";
     } else if (role === "Intern") {
       roleInfo = "school name";
     } else {
       roleInfo = "office number";
     }
     inquirer.prompt([
-      {
+      { // prompt to enter necessary information for their role
       type: "input",
       message: `Enter the employee's ${roleInfo}.`,
       name: "roleInfo"
       },
-      {
+      { // select whether or not you would like to add another employee
       type: "list",
       message: "Would you like to add more employees?",
       choices: ["yes", "no"],
       name: "moreEmployees"
       }
-    ])
+    ]) // then function to add the employee input to the teamArray, add the employee to the HTML, and rerun the addEmployee function if the user wants to add another employee
     .then(function({roleInfo, moreEmployees}) {
       let newEmployee;
       if (role === "Engineer") {
@@ -89,7 +84,7 @@ function addEmployee() {
   });
 }
 
-// Function to generate the HTML page that will render the team information
+// Function to begin generating the HTML page that will render the team information
 function startHtml() {
   const html = `<!DOCTYPE html>
   <html lang="en">
@@ -111,6 +106,76 @@ function startHtml() {
       console.log(err);
     }
   });
+  console.log("Began writing team HTML file")
+}
+
+// Function to write the HTML for each new employee and then append it to the index.html file that will be written
+function addHtml(employee) {
+  return new Promise(function(resolve, reject) {
+    const name = employee.getName();
+    const role = employee.getRole();
+    const id = employee.getId();
+    const email = employee.getEmail();
+    let data = "";
+    if (role === "Engineer") {
+      const github = employee.getGitHub();
+      data = `<div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">${name} - ${role}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email Address: ${email}</li>
+        <li class="list-group-item">GitHub: ${github}</li>
+      </ul>
+    </div>`
+    } else if (role === "Intern") {
+      const school = employee.getSchool();
+      data = `<div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">${name} - ${role}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email Address: ${email}</li>
+        <li class="list-group-item">School: ${school}</li>
+      </ul>
+    </div>`
+    } else {
+      const officeNumber = employee.getOfficeNumber();
+      data = `<div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">${name} - ${role}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email Address: ${email}</li>
+        <li class="list-group-item">Office Number: ${officeNumber}</li>
+      </ul>
+    </div>`
+    }
+    console.log("Team member added");
+    // Appends the file to the index.html file
+    fs.appendFile("./output/index.html", data, function(err) {
+      if (err) {
+        return reject(err);
+      };
+      return resolve();
+    });
+  });
+}
+
+function finishHtml() {
+  const html = `  </div>
+    </div>
+  </body>
+  </html>`;
+  fs.appendFile("./output/index.html", html, function(err) {
+    if (err) {
+      console.log(err);
+    };
+  });
+  console.log("Finished assembling team")
 }
 
 addEmployee();
