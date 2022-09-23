@@ -118,7 +118,7 @@ function addHtml(employee) {
     const email = employee.getEmail();
     let data = "";
     if (role === "Engineer") {
-      const github = employee.getGitHub();
+      const github = employee.getGithub();
       data = `<div class="card" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">${name} - ${role}</h5>
