@@ -7,7 +7,13 @@ const Intern = require('./lib/intern.js');
 // Required Node modules
 const fs = require('fs');
 const inquirer = require('inquirer'); 
+const {inherits} = require('util');
 
+// Function to initialize the program upon opening
+function initialize() {
+  addEmployee();
+  startHtml();
+}
 // Array to contain the team inputs
 const teamArray = [];
 
@@ -70,7 +76,7 @@ function addEmployee() {
         newEmployee = new Intern(name, id, email, roleInfo);
       } else {
         newEmployee = new Manager(name, id, email, roleInfo);
-      }
+      } // Pushes the new employee to the teamArray and checks to see if the user would like to add more employees
       teamArray.push(newEmployee);
       addHtml(newEmployee)
       .then(function() {
@@ -100,7 +106,9 @@ function startHtml() {
       <span class="navbar-brand mb-0 h1 w-100 text-center">Team Profile</span>
     </nav>
     <div class="container">
-      <div class="row">`;
+      <div class="row">
+      `;
+  // Creates the HTML file that will be used to house team info
   fs.writeFile("./output/index.html", html, function(err) {
     if (err) {
       console.log(err);
@@ -117,6 +125,7 @@ function addHtml(employee) {
     const id = employee.getId();
     const email = employee.getEmail();
     let data = "";
+    // Engineer info in HTML
     if (role === "Engineer") {
       const github = employee.getGithub(); 
       data = `<div class="card" style="width: 18rem;">
@@ -128,7 +137,8 @@ function addHtml(employee) {
         <li class="list-group-item">Email Address: ${email}</li>
         <li class="list-group-item">GitHub: ${github}</li>
       </ul>
-    </div>`
+    </div>
+    ` // Intern info in HTML
     } else if (role === "Intern") {
       const school = employee.getSchool();
       data = `<div class="card" style="width: 18rem;">
@@ -140,7 +150,8 @@ function addHtml(employee) {
         <li class="list-group-item">Email Address: ${email}</li>
         <li class="list-group-item">School: ${school}</li>
       </ul>
-    </div>`
+    </div>
+    ` // Manager info in HTML
     } else {
       const officeNumber = employee.getOfficeNumber();
       data = `<div class="card" style="width: 18rem;">
@@ -152,7 +163,8 @@ function addHtml(employee) {
         <li class="list-group-item">Email Address: ${email}</li>
         <li class="list-group-item">Office Number: ${officeNumber}</li>
       </ul>
-    </div>`
+    </div>
+    `
     }
     console.log("Team member added");
     // Appends the file to the index.html file
@@ -165,6 +177,7 @@ function addHtml(employee) {
   });
 }
 
+// Fucntion to finish writing the HTML file once the user says they don't want to add anymore employees
 function finishHtml() {
   const html = `  </div>
     </div>
@@ -178,180 +191,4 @@ function finishHtml() {
   console.log("Finished assembling team")
 }
 
-addEmployee();
-startHtml();
-
-// Beginning manager prompts
-// const addManager = () => {
-//   return inquirer.prompt ([
-//     {
-//       type: 'input',
-//       name: 'name',
-//       message: 'What is the name of the team manager?',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter the name of the manager.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'id',
-//       message: 'Please enter the ID of the manager.',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid work ID.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'email',
-//       message: 'Please enter the email of the manager.',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid email.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'officeNumber',
-//       message: 'Please enter the office number of the manager.',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid office number.');
-//           return false;
-//         }
-//       }
-//     }
-//   ]) // Adds the manager to the teamArray
-//   .then(managerInput => {
-//     const {name, id, email, officeNumber} = managerInput
-//     const manager = new Manager (name, id, email, officeNumber);
-
-//     teamArray.push(manager);
-//   })
-// };
-
-// // Beginning prompts for adding a new employee
-// const addEmployee = () => {
-//   console.log('Adding a new employee to the team');
-
-//   return inquirer.prompt ([
-//     {
-//       type: 'list',
-//       name: 'role',
-//       message: 'Choose a role for the new employee.',
-//       choices: ['Engineer', 'Intern']
-//     },
-//     {
-//       type: 'input',
-//       name: 'name',
-//       message: 'What is the name of the employee?',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter the name of the employee.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'id',
-//       message: 'Please enter the ID of the employee.',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid work ID.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'email',
-//       message: 'Please enter the email of the employee.',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid email.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'github',
-//       message: 'Please enter the github of the employee.',
-//       when: (input) => input.role === 'Engineer',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid github username.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'school',
-//       message: 'Please enter the school of the employee.',
-//       when: (input) => input.role === 'Intern',
-//       validate: nameInput => {
-//         if(nameInput) {
-//           return true;
-//         } else {
-//           console.log('Invalid. Please enter a valid school name.');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       // Gives the user the iption to add a new team member or stop adding them
-//       type: 'list',
-//       name: 'addEmployee',
-//       message: 'Would you like to add more team members?',
-//       choices: ["yes", "no"]
-//     }
-//   ])
-//   .then(teamData => {
-//     // the input data for each of the employee types
-//     if(teamData.role === "Engineer") {
-//       const {name, id, email, github} = teamData;
-//       const engineer = new Engineer (name, id, email, github);
-
-//       teamArray.push(engineer);
-//       console.log(engineer);
-//     } else {
-//       const {name, id, email, school} = teamData;
-//       const intern = new Inter (name, id, email, school);
-
-//       teamArray.push(intern);
-//       console.log(intern);
-//     }
-//     if(addEmployee === "yes") {
-//       addEmployee(teamArray);
-//     } else {
-//       return teamArray;
-//     }
-//   })
-// };
-
-// addManager().then(addEmployee)
+initialize();
