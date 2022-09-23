@@ -7,7 +7,6 @@ const Intern = require('./lib/intern.js');
 // Required Node modules
 const fs = require('fs');
 const inquirer = require('inquirer'); 
-const {inherits} = require('util');
 
 // Function to initialize the program upon opening
 function initialize() {
@@ -179,7 +178,7 @@ function addHtml(employee) {
 
 // Fucntion to finish writing the HTML file once the user says they don't want to add anymore employees
 function finishHtml() {
-  const html = `  </div>
+  const html = ` </div>
     </div>
   </body>
   </html>`;
