@@ -14,6 +14,7 @@ I wanted to learn how to properly test js files. I built the project so I could 
 In order to install this project, a user simply needs to pull the data from the repository. They need to make sure that they delete the index.html that is sitting in the output folder since it will not apply to them.
 ## Usage
 In order to use the project, you will need to have node downloaded on your device. You will also need to run it in the console, where you can add all of the information necessary for your teams.
+[![Team-Profile-Generator-Screenshot.png](https://i.postimg.cc/MpWk6fZF/Team-Profile-Generator-Screenshot.png)](https://postimg.cc/QHnYStTQ)
 ## License
 The MIT License
 ## Contributing
