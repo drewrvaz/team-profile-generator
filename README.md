@@ -15,6 +15,7 @@ In order to install this project, a user simply needs to pull the data from the 
 ## Usage
 In order to use the project, you will need to have node downloaded on your device. You will also need to run it in the console, where you can add all of the information necessary for your teams.
 [![Team-Profile-Generator-Screenshot.png](https://i.postimg.cc/MpWk6fZF/Team-Profile-Generator-Screenshot.png)](https://postimg.cc/QHnYStTQ)
+(https://drive.google.com/drive/folders/1hjtS5Z88r6sdoYPQ6jvFXBthflIz2TTe)
 ## License
 The MIT License
 ## Contributing
